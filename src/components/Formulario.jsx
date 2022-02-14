@@ -1,19 +1,19 @@
 import React from 'react';
-import { Container, Form, Button,Row,Col,Table,Card,ListGroup,ListGroupItem } from 'react-bootstrap';
+import { Container, Form, Button, Row, Col, Table, Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import uuid from 'react-uuid';
 
 class Formulario extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            urlTabla:'https://api-mobilespecs.azharimm.site/v2/top-by-fans',
+            urlTabla: 'https://api-mobilespecs.azharimm.site/v2/top-by-fans',
             tableData: [],
             listaMarcas: [],
-            imagenTelefono:'',
-            telefonoSeleccionado:'',
+            imagenTelefono: '',
+            telefonoSeleccionado: '',
         }
-        this.selectedItem= '';
-        this.marcaSeleccionada='';
+        this.selectedItem = '';
+        this.movilFavorito=[];
 
     }
     async componentDidMount() {
@@ -21,18 +21,26 @@ class Formulario extends React.Component {
         const responseData = await response.json();
         const responseModelos = await fetch('https://api-mobilespecs.azharimm.site/v2/brands');
         const responseDataModelos = await responseModelos.json();
-        this.selectedItem=responseData['data']['phones'][0]['detail'];
+        this.selectedItem = responseData['data']['phones'][0]['detail'];
         this.setState({ tableData: responseData['data']['phones'], listaMarcas: responseDataModelos['data'] })
     }
-    async cargarSeleccionado(){
+    async cargarSeleccionado() {
         const response = await fetch(this.selectedItem);
         const responseData = await response.json();
-        this.setState({telefonoSeleccionado:responseData['data'], imagenTelefono:responseData['data']['phone_images'][0]});
+        this.setState({ telefonoSeleccionado: responseData['data'], imagenTelefono: responseData['data']['phone_images'][0] });
     }
     changeSelected = (item) => {
-        this.selectedItem=item.detail;
-      };
-
+        this.selectedItem = item.detail;
+    };
+    filtrarMarca() {
+        //this.setState([urlTabla:])
+    };
+    addFavoritos() {
+        this.movilFavorito.push(this.state.telefonoSeleccionado);
+    };
+    componentWillUnmount() {
+        localStorage.setItem('listaMovilesFavoritos', this.movilFavorito);
+    }
     render() {
         this.cargarSeleccionado();
         return (
@@ -40,8 +48,8 @@ class Formulario extends React.Component {
                 <Container>
                     <Form.Group className="mb-3">
                         <Form.Label>Marca</Form.Label>
-                        <Form.Select ref={this.modeloSeleccionado}>
-                        {this.state.listaMarcas.map((item) => {
+                        <Form.Select>
+                            {this.state.listaMarcas.map((item) => {
                                 return (
                                     <option>{item.brand_name}</option>
                                 );
@@ -92,8 +100,13 @@ class Formulario extends React.Component {
                                     <ListGroupItem>Almacenamiento:{this.state.telefonoSeleccionado.storage}</ListGroupItem>
                                 </ListGroup>
                                 <Card.Body>
-                                    <Card.Link href="#">Card Link</Card.Link>
-                                    <Card.Link href="#">Another Link</Card.Link>
+                                    <Button
+                                        variant="primary"
+                                        type="button"
+                                        onClick={this.addFavoritos.bind(this)}
+                                    >
+                                        Añadir a favoritos
+                                    </Button>
                                 </Card.Body>
                             </Card>
                         </Col>

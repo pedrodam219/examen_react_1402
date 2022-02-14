@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Lista from './Lista';
 class Ejercicio3 extends React.Component {
   constructor(props) {
     super(props);
@@ -18,6 +18,7 @@ class Ejercicio3 extends React.Component {
           pero en este caso el botón sirve para eliminar el teléfono de la lista de favoritos<b> - 1,25 puntos</b>
         </li>
       </ul>
+      <Lista />
     </div>
     );
   }

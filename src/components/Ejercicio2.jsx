@@ -1,4 +1,5 @@
 import React from 'react';
+import Formulario from './Formulario';
 
 class Ejercicio2 extends React.Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class Ejercicio2 extends React.Component {
           Añade un botón al Card que permita añadir un teléfono a una lista de favoritos, de modo que almacene su información en localStorage al ir a otra página<b> - 1 punto</b>
         </li>
       </ul>
+      <Formulario />
     </div>
      
     );

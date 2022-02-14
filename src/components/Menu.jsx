@@ -1,6 +1,6 @@
 import React from 'react';
 import uuid from 'react-uuid';
-import {MenuElements}from '../data/MenuElements';
+import {PaginasApp}from '../data/PaginasApp';
 import { Link } from 'react-router-dom';
 import { Navbar, Container, Nav,Offcanvas } from 'react-bootstrap';
 class Menu extends React.Component {
@@ -12,7 +12,14 @@ class Menu extends React.Component {
     return (
       <Navbar bg="light" expand={false}>
       <Container fluid>
-        <Navbar.Brand href="#">Examen react</Navbar.Brand>
+        <Navbar.Brand href="#">Examen react
+            <img
+              className="logo-image"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/React.svg/1200px-React.svg.png"
+              width="150px"
+              alt="logo"
+            />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="offcanvasNavbar" />
         <Navbar.Offcanvas
           id="offcanvasNavbar"
@@ -24,7 +31,7 @@ class Menu extends React.Component {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="justify-content-end flex-grow-1 pe-3">
-            {MenuElements.map((item) => {
+            {PaginasApp.map((item) => {
                 return (
                   <Nav.Link key={uuid()} as={Link}  to={item.path}>
                     {item.title}
